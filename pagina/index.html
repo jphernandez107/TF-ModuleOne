@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IOT - Config</title>
+    <script src="js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="h1">Configuración</h1>
+        <form action="/config" method="POST">
+            <h4 class="display-6">WiFi</h4>
+            <div class="mb-3">
+                <label class="form-label" for="wifissid">SSID:</label>
+                <input class="form-control" type="text" id="wifissid" name="wifi_ssid">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="wifipass">Password:</label>
+                <input class="form-control" type="text" id="wifipass" name="wifi_pass">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="clientID">ID de Cliente:</label>
+                <input class="form-control" type="text" id="clientID" name="client_id">
+            </div>
+            <h4 class="display-6">Ubicación</h4>
+            <div class="mb-3">
+                <label class="form-label" for="invernader">Invernadero:</label>
+                <input class="form-control" type="text" id="invernadero" name="invernadero_id">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="sector">Sector:</label>
+                <input class="form-control" type="text" id="sector" name="sector_id">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="seccion">Sección:</label>
+                <input class="form-control" type="text" id="seccion" name="seccion_id">
+            </div>
+            <h4 class="display-6">Datos MQTT</h4>
+            <div class="mb-3">
+                <label class="form-label" for="brk">Broker:</label>
+                <input class="form-control" type="text" id="brk" name="mqtt_broker">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="port">Puerto:</label>
+                <input class="form-control" type="text" id="port" name="mqtt_port">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="userm">User:</label>
+                <input class="form-control" type="text" id="userm" name="mqtt_user">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="passm">Password:</label>
+                <input class="form-control" type="text" id="passm" name="mqtt_pass">
+            </div>
+            <!--h5 class="display-6">Topics</h5>
+            <div class="mb-3">
+                <label class="form-label" for="temp">Temperatura ambiente:</label>
+                <input class="form-control" type="text" id="temp" name="topic_temp_amb">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="hum">Humedad ambiente:</label>
+                <input class="form-control" type="text" id="hum" name="topic_hum_amb">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="humSuelo">Humedad suelo:</label>
+                <input class="form-control" type="text" id="humSuelo" name="topic_hum_suelo">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="luz">Luz:</label>
+                <input class="form-control" type="text" id="luz" name="topic_luz">
+            </div-->
+            <h4 class="display-6">Administración</h4>
+            <div class="mb-3">
+                <label class="form-label" for="usera">Usuario de Administrador:</label>
+                <input class="form-control" type="text" id="usera" name="admin_user">
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="passa">Password de Administrador:</label>
+                <input class="form-control" type="text" id="passa" name="admin_pass">
+            </div>
+            <br>
+            <p class="lead">Los campos que no deban ser modificados se dejan en blanco. Para dejar contraseñas u otros datos en blanco, completar el campo con
+            la palabra "null" (Sin comillas).</p>
+            <br>
+           <input type="submit" value="Cargar Datos" class="btn btn-primary">
+        </form>
+    </div>
+</body>
+</html>
