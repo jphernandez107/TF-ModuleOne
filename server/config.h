@@ -1,3 +1,5 @@
+#ifndef CONFIG_T
+#define CONFIG_T
 typedef struct {
   // Accesspoint 
   char wifi_ssid[50] = "Vacio";
@@ -23,3 +25,4 @@ typedef struct {
   char client_id[30] = "ESP-ModuleOne-001";
 
 } config_t;
+#endif
