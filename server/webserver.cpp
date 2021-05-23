@@ -138,9 +138,11 @@ void WebServer_init() {
   server.onNotFound(handleNotFound);
   server.begin();
   isRunning = true;
+  Serial.println("Server iniciado");
 }
 
 void WebServer_stop() {
+  Serial.println("Parando WebServer");
   server.stop();
   isRunning = false;
 }

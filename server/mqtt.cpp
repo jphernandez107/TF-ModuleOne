@@ -1,5 +1,4 @@
 #include "mqtt.h"
-#include "wifi_setup.h"
 #include <PubSubClient.h>
 #include <EEPROM.h>
 #include <WiFiClient.h>
@@ -11,20 +10,14 @@ String invernaderoId = "A"; //TODO - estos datos son de MQTT o son del negocio?
 String sectorId = "1";
 String seccionId = "A";
 
-long actualTimeSendData = 0;
-long timeToSendData = 5000; // Intervalo de envio de información
-
 // Datos mqtt
 String mqttBroker = "192.168.1.105";
 int mqttPort = 1883;
 String mqtt_user = "";
 String mqtt_pass = "";
 
-config_t config;
-
 WiFiClient wclient;
 PubSubClient client(wclient);
-
 
 String topicGen;// = "/" + invernaderoId + "/" + sectorId + "/" + seccionId + "/";
 String topicTempAmb, topicHumAmb, topicHumSuelo, topicLuz;
@@ -36,22 +29,16 @@ void updateTopics();
 void sendData();
 
 void MQTT_setup() {
-  mqttBroker = config.mqtt_broker;
-  mqttPort = config.broker_puerto;
   updateTopics();
   client.setServer(mqttBroker.c_str(), mqttPort);
 }
 
-void MQTT_loop(long millis) {
-  if((millis - actualTimeSendData) >= timeToSendData && client.connected()){ //TODO - Chequear si es necesario verificar conexion wifi
-      sendData();
-      actualTimeSendData = millis;
-    }
+void MQTT_publishData() {
+  if(client.connected()) sendData(); //TODO - Chequear si es necesario verificar conexion wifi
 }
 
 void MQTT_reconectar() { //TODO - Chequear si es necesario verificar conexion wifi
   if (!client.connected()) {
-    Serial.println("Reconectando... ");
     if (client.connect(clientID.c_str(), mqtt_user.c_str(), mqtt_pass.c_str())) Serial.println("MQTT connected.");
   }
   if (client.connected()) {
@@ -59,26 +46,27 @@ void MQTT_reconectar() { //TODO - Chequear si es necesario verificar conexion wi
   }
 }
 
-void MQTT_setServer(String broker, int port) {
-  updateTopics();
+void MQTT_setServer() {
   client.disconnect();
-  client.setServer(broker.c_str(), port);
+  client.setServer(mqttBroker.c_str(), mqttPort);
 }
 
-void MQTT_updateConfig(config_t config) { 
-  mqttBroker = config.mqtt_broker;
-  mqttPort = config.broker_puerto;
-  invernaderoId = config.invernadero_id;
-  sectorId = config.sector_id;
-  seccionId = config.seccion_id;
-  mqtt_user = config.mqtt_user;
-  mqtt_pass = config.mqtt_pass;
-  clientID = config.client_id;
+void MQTT_updateConfig() { 
+  config_t newConfig;
+  EEPROM.get(0, newConfig);
+  mqttBroker = newConfig.mqtt_broker;
+  mqttPort = newConfig.broker_puerto;
+  invernaderoId = newConfig.invernadero_id;
+  sectorId = newConfig.sector_id;
+  seccionId = newConfig.seccion_id;
+  mqtt_user = newConfig.mqtt_user;
+  mqtt_pass = newConfig.mqtt_pass;
+  clientID = newConfig.client_id;
 
-  MQTT_setServer(mqttBroker, mqttPort);
+  MQTT_setServer();
+  updateTopics();
   MQTT_reconectar();
 }
-
 
 void updateTopics() {
   topicGen = "/" + invernaderoId + "/" + sectorId + "/" + seccionId + "/";
@@ -89,8 +77,8 @@ void updateTopics() {
 }
 
 void sendData() {
-  //TODO - Agregar el codigo para enviar los datos por mqtt (tambien agregar el delay en el if)
-  client.publish(topicTempAmb.c_str(), "tempAmb");
+  //TODO - Agregar los parametros para enviar los datos por mqtt
+  if (client.publish(topicTempAmb.c_str(), "tempAmb")) Serial.println(topicHumAmb);
   client.publish(topicHumAmb.c_str(), "humAmb");
   client.publish(topicHumSuelo.c_str(), "humSuelo");
   client.publish(topicLuz.c_str(), "luz");

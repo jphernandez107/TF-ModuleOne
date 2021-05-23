@@ -1,7 +1,9 @@
-// #include <ESP8266WiFi.h>
-// #include <WiFiClient.h>
-// #include <ESP8266mDNS.h>
-// #include <DNSServer.h>
+#include "config.h"
 
-// WiFiClient WifiSetup_WiFiClient();
-// void WifiSetup_setup();
+void WifiSetup_disconnect();
+void WifiSetup_loop();
+void WifiSetup_startAP();
+void WifiSetup_stopAP();
+void WifiSetup_startDNS();
+void WifiSetup_configureWifi();
+void WifiSetup_updateConfig();
