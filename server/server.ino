@@ -1,6 +1,7 @@
 #include "config.h"
 #include "wifi_setup.h"
 #include "mqtt.h"
+#include "sensors.h"
 #include <EEPROM.h>
 #include "webserver.h"
 #include <SPI.h>
@@ -28,6 +29,7 @@ void setup(void) {
   updateConfig();
 
   iniciarWebServer();
+  Sensors_setup();
   
   actualTimeOut = millis();
   printConfig();
@@ -56,7 +58,9 @@ void loop(void) {
   WebServer_loop();
 
   if ((millis() - actualTimeSendData) >= timeToSendData) {
-    MQTT_publishData(); //TODO - Pasar por parametro los valores a enviar
+    sensor_t sens[SENSOR_COUNT];
+    Sensors_getSensors(sens);
+    MQTT_publishData(sens);
     actualTimeSendData = millis();
   }
   delay(10);

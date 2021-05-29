@@ -19,22 +19,26 @@ String mqtt_pass = "";
 WiFiClient wclient;
 PubSubClient client(wclient);
 
-String topicGen;// = "/" + invernaderoId + "/" + sectorId + "/" + seccionId + "/";
-String topicTempAmb, topicHumAmb, topicHumSuelo, topicLuz;
+String topicGen;
 
 /**
  * Declaracion de funciones privadas
 */
 void updateTopics();
-void sendData();
+void sendData(String, String);
 
 void MQTT_setup() {
   updateTopics();
   client.setServer(mqttBroker.c_str(), mqttPort);
 }
 
-void MQTT_publishData() {
-  if(client.connected()) sendData(); //TODO - Chequear si es necesario verificar conexion wifi
+void MQTT_publishData(sensor_t sensors[]) {
+  if(client.connected()) {
+    for(int i=0; i < SENSOR_COUNT; i++) {
+      String topic = topicGen + sensors[i].topic_end;
+      sendData(topic, String(sensors[i].value)); 
+    }
+  }
 }
 
 void MQTT_reconectar() { //TODO - Chequear si es necesario verificar conexion wifi
@@ -70,16 +74,8 @@ void MQTT_updateConfig() {
 
 void updateTopics() {
   topicGen = "/" + invernaderoId + "/" + sectorId + "/" + seccionId + "/";
-  topicTempAmb = topicGen + "temperatura-ambiente";
-  topicHumAmb = topicGen + "humedad-ambiente";
-  topicHumSuelo = topicGen + "humedad-suelo";
-  topicLuz = topicGen + "luz";
 }
 
-void sendData() {
-  //TODO - Agregar los parametros para enviar los datos por mqtt
-  if (client.publish(topicTempAmb.c_str(), "tempAmb")) Serial.println(topicHumAmb);
-  client.publish(topicHumAmb.c_str(), "humAmb");
-  client.publish(topicHumSuelo.c_str(), "humSuelo");
-  client.publish(topicLuz.c_str(), "luz");
+void sendData(String topic, String value) {
+  if (client.publish(topic.c_str(), value.c_str())) Serial.println(value);
 }
