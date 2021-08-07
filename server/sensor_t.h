@@ -1,7 +1,7 @@
 #ifndef SENSORS_T
 #define SENSORS_T
 
-#define SENSOR_COUNT 3
+#define SENSOR_COUNT 4
 
 typedef struct {
   char topic_end[50] = "Vacio";
