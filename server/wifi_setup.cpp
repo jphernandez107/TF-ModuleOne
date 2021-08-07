@@ -14,6 +14,10 @@ DNSServer dnsServer;
 IPAddress apIP(192, 168, 4, 1);
 IPAddress netMsk(255, 255, 255, 0);
 
+IPAddress deviceIP(192, 168, 0, 40);
+IPAddress deviceGateway(192, 168, 0, 1);
+IPAddress deviceDNS(8, 8, 8, 8);
+
 void WifiSetup_disconnect() {
   WiFi.disconnect();
 }
@@ -56,6 +60,7 @@ void WifiSetup_configureWifi() {
     Serial.println("...");
     Serial.println("IP de Conf: 192.168.4.1");
 
+    WiFi.config(deviceIP, deviceDNS, deviceGateway, netMsk);
     WiFi.begin(ssid, pass);
 
     if (WiFi.waitForConnectResult() != WL_CONNECTED) {
