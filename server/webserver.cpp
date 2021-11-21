@@ -16,9 +16,9 @@ void handleRoot() {
   String pass = confi.admin_pass;
   String user = confi.admin_user;
   
-  if (pass.equals(".") && user.equals(".")) {
+  // if (pass.equals(".") && user.equals(".")) {
     confi.admin_protected = 0;
-  }
+  // }
   EEPROM.put(0, confi);
   EEPROM.commit();
   EEPROM.get(0, confi);

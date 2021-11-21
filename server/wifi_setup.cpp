@@ -7,14 +7,14 @@
 
 const char* ssid = "Vacio";
 const char* pass = "";
-String wifiAPssid = "Módulo Vacío 001";// + MODULE_MODEL;//"Module " + MODULE_MODEL + " - inv:" + invernaderoId + " - " + sectorId + " - " + seccionId;
+String wifiAPssid = "Módulo Vacío 005";// + MODULE_MODEL;//"Module " + MODULE_MODEL + " - inv:" + invernaderoId + " - " + sectorId + " - " + seccionId;
 String wifiAPpass = "";  //TODO - cambiar pass
 
 DNSServer dnsServer;
 IPAddress apIP(192, 168, 4, 1);
 IPAddress netMsk(255, 255, 255, 0);
 
-IPAddress deviceIP(192, 168, 0, 40);
+IPAddress deviceIP(192, 168, 0, 43);
 IPAddress deviceGateway(192, 168, 0, 1);
 IPAddress deviceDNS(8, 8, 8, 8);
 

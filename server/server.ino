@@ -11,7 +11,7 @@
 long actualTimeOut = 0;
 long timeOut = 10000;
 long actualTimeSendData = 0;
-long timeToSendData = 5000; // Intervalo de envio de información
+long timeToSendData = 30000; // Intervalo de envio de información
 
 config_t conf;
 

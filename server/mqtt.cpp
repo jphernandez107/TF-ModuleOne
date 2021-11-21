@@ -77,5 +77,7 @@ void updateTopics() {
 }
 
 void sendData(String topic, String value) {
+  String s = topic + " with value: " + value;
+  Serial.println(s);
   if (client.publish(topic.c_str(), value.c_str())) Serial.println(value);
 }
